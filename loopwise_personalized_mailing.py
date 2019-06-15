@@ -1,4 +1,32 @@
-import smtplib
+import smtplib,webbrowser
+def getmail():
+
+    services=['gmail','hotmail','yahoo', 'outlook','pilani.bits-pilani']
+    while True:
+        user_mail=(input("Enter your mail address")).lower()
+        if "@" in user_mail and (".com" in user_mail or ".ac.in" in user_mail):
+            sym_pos=user_mail.find("@")
+            if ".com" in user_mail:
+                domain_pos=user_mail.find(".com")
+            else:
+                domain_pos=user_mail.find(".ac.in")
+            service_provider=user_mail[sym_pos+1:domain_pos]
+            if service_provider not in services:
+                print("We only provide services for:",end=' ')
+                for i in services:
+                    print(f"{i}")
+                continue
+
+            break
+        else:
+            print("Please enter a valid email.")
+            continue
+    return user_mail, service_provider
+
+
+user_mail,service_provider=getmail()
+print(f"{user_mail},{service_provider}")
+
 connection = smtplib.SMTP('smtp.gmail.com', 587)
 connection.ehlo()
 connection.starttls()
