@@ -1,7 +1,7 @@
 import smtplib,webbrowser
 def getmail():
 
-    services=['gmail','hotmail','yahoo', 'outlook','pilani.bits-pilani']
+    services=['gmail','hotmail','yahoo','ymail','mail.yahoo', 'outlook','pilani.bits-pilani']
     while True:
         user_mail=(input("Enter your mail address")).lower()
         if "@" in user_mail and (".com" in user_mail or ".ac.in" in user_mail):
@@ -24,8 +24,17 @@ def getmail():
     return user_mail, service_provider
 
 
+def set_smtp_domain(service_provider):
+    if service_provider == 'gmail' or service_provider=='pilani.bits-pilani.ac.in':
+        return 'smtp.gmail.com'
+    elif service_provider=='yahoo' or service_provider=='ymail':
+        return 'smtp.mail.yahoo.com'
+    elif service_provider=='outlook' or service_provider=='hotmail':
+        return 'smtp-mail.outlook.com'
+
+
 user_mail,service_provider=getmail()
-print(f"{user_mail},{service_provider}")
+print(f"{user_mail},{service_provider},{set_smtp_domain(service_provider)}")
 
 connection = smtplib.SMTP('smtp.gmail.com', 587)
 connection.ehlo()
